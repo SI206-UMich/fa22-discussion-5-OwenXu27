@@ -1,10 +1,12 @@
+from tkinter import W
 import unittest
 
 # Counts the number of a's in a sentence (e.g., a string)
 def count_a(sentence):
 	total = 0
-	for i in range(len(sentence) - 1):
-		if i == 'a':
+	# for i in range(len(sentence) - 1): 
+	for i in sentence: 
+		if i == 'a' or i == "A":
 			total += 1
 	return total
 
@@ -38,15 +40,24 @@ class Warehouse:
 
 	# Adds an item to the warehouse	
 	def add_item(self, item):
-		pass
+		self.items.append(item)
+		
 
 	# Returns the item in the warehouse with the most stock		
 	def get_max_stock(self):
-		pass
+		max = self.items[0]
+		for i in self.items:
+			if i.stock > max.stock:
+				max = i
+		return max
 	
 	# Returns the item in the warehouse with the highest price
 	def get_max_price(self):
-		pass	
+		max = self.items[0]
+		for i in self.items:
+			if i.price > max.price:
+				max = i
+		return max
 
 
 
@@ -63,22 +74,35 @@ class TestAllMethods(unittest.TestCase):
 
 	## Check to see whether count_a works
 	def test_count_a(self):
-		pass
+		string = "abcdabcdaaaA"
+		self.assertEqual(count_a(string),6)
 
 
 	## Check to see whether you can add an item to the warehouse
 	def test_add_item(self):
-		pass
+		n = Warehouse()
+		item = n.add_item(self.item1)
+		n.add_item(self.item2)
+		n.add_item(self.item3)
+		self.assertEqual(len(n.items),3)
 
 
 	## Check to see whether warehouse correctly returns the item with the most stock
 	def test_warehouse_max_stocks(self):
-		pass
+		w = Warehouse()
+		w.add_item(self.item1)
+		w.add_item(self.item2)
+		w.add_item(self.item3)
+		self.assertEqual(w.get_max_stock(),self.item3)
 
 
 	# Check to see whether the warehouse correctly return the item with the highest price
 	def test_warehouse_max_price(self):
-		pass
+		w1 = Warehouse()
+		w1.add_item(self.item1)
+		w1.add_item(self.item2)
+		w1.add_item(self.item3)
+		self.assertEqual(w1.get_max_price(),self.item1)
 		
 
 def main():
